@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Win Streak — Your Invitation from Adaego | Tbay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:  #091828; --teal-dark: #0A5C65; --teal-mid: #0D8F98;
+  --teal: #14B5BE; --teal-bright: #1DCCCE;
+  --gold: #F59E0B; --gold-lt: #FDE68A; --white: #FFFFFF;
+  --v: #A855F7; --v-bg: rgba(168,85,247,.15); --v-bd: rgba(168,85,247,.30); --v-dk: #7E22CE;
+  --m70: rgba(255,255,255,.70); --m60: rgba(255,255,255,.60);
+  --m40: rgba(255,255,255,.40); --m20: rgba(255,255,255,.20);
+  --m12: rgba(255,255,255,.12); --m08: rgba(255,255,255,.08); --m06: rgba(255,255,255,.06);
+  --r: 16px; --rpill: 999px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--white); -webkit-font-smoothing: antialiased; min-height: 100vh; overflow-x: hidden; }
+
+/* ── HERO ── */
+.hero { position: relative; padding: 44px 22px 56px; background: linear-gradient(145deg, #091828 0%, #0A5C65 55%, #13B5BE 100%); overflow: hidden; }
+.hero::after { content:''; position:absolute; top:-80px; right:-80px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle, rgba(29,204,206,.20) 0%, transparent 68%); pointer-events:none; }
+.hero::before { content:''; position:absolute; bottom:-40px; left:35%; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(245,158,11,.06) 0%, transparent 70%); pointer-events:none; }
+
+/* Exclusive badge */
+.excl-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--v-bg); border: 1px solid var(--v-bd);
+  color: var(--v); padding: 6px 14px; border-radius: var(--rpill);
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.excl-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--v); }
+
+.hero-title { font-size: clamp(44px, 12vw, 58px); font-weight: 900; line-height: 1.0; letter-spacing: -1px; margin-bottom: 8px; }
+.title-win    { color: var(--white); }
+.title-streak { color: var(--gold); }
+.hero-from { font-size: 14px; color: var(--m60); margin-bottom: 6px; }
+.hero-from strong { color: var(--v); }
+
+/* Spot confirmed strip */
+.spot-confirmed {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--v-bg); border: 1px solid var(--v-bd);
+  border-radius: var(--rpill); padding: 7px 14px;
+  font-size: 13px; font-weight: 600; color: var(--v);
+  margin-bottom: 22px;
+}
+.spot-check { font-size: 14px; }
+
+/* Campaign status / countdown */
+.badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: var(--rpill); font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+.badge-pre  { background: rgba(245,158,11,.14); border: 1px solid rgba(245,158,11,.38); color: var(--gold); }
+.badge-live { background: rgba(29,204,206,.14); border: 1px solid rgba(29,204,206,.38); color: var(--teal-bright); }
+.badge-done { background: var(--m06); border: 1px solid var(--m20); color: var(--m40); }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-gold { background: var(--gold); animation: pulse 2s infinite; }
+.dot-teal { background: var(--teal-bright); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)} }
+
+.cd-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--m40); margin-bottom: 12px; }
+.cd-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 9px; max-width: 320px; margin-bottom: 4px; }
+.cd-box { background: var(--m08); border: 1px solid var(--m20); border-radius: 12px; padding: 14px 6px; text-align: center; }
+.cd-num { display: block; font-size: 30px; font-weight: 800; line-height: 1; color: var(--white); }
+.cd-unit { display: block; font-size: 10px; color: var(--m40); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+.live-block { display: flex; align-items: center; gap: 12px; background: rgba(29,204,206,.12); border: 1px solid rgba(29,204,206,.30); border-radius: 14px; padding: 16px 18px; }
+.live-block-text { font-size: 15px; font-weight: 700; color: var(--teal-bright); }
+.live-block-sub  { font-size: 12px; color: var(--m40); margin-top: 2px; }
+
+.date-strip { display: flex; align-items: center; gap: 8px; margin-top: 26px; padding: 9px 14px; background: var(--m06); border: 1px solid var(--m12); border-radius: var(--rpill); width: fit-content; font-size: 13px; color: var(--m60); }
+.date-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+
+.pills { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+.pill { display: flex; align-items: center; gap: 12px; background: var(--m06); border: 1px solid var(--m12); border-radius: var(--rpill); padding: 12px 16px; font-size: 14px; font-weight: 500; }
+.pill-ico { width: 34px; height: 34px; border-radius: 50%; background: rgba(29,204,206,.15); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 520px; margin: 0 auto; padding: 0 20px 80px; }
+.sec  { padding: 28px 0; }
+.divider { height: 1px; background: var(--m08); }
+.sec-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; color: var(--teal); margin-bottom: 6px; }
+.sec-h { font-size: 21px; font-weight: 700; margin-bottom: 14px; }
+
+/* ── INVITATION CARD ── */
+.invite-card {
+  background: var(--m06); border: 1px solid var(--v-bd);
+  border-top: 3px solid var(--v);
+  border-radius: 0 0 var(--r) var(--r); padding: 22px 20px 20px;
+}
+.invite-hd {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--m08);
+}
+.invite-seal { font-size: 22px; }
+.invite-hd-text-top { font-size: 12px; font-weight: 700; color: var(--v); letter-spacing: .5px; text-transform: uppercase; }
+.invite-hd-text-sub { font-size: 11px; color: var(--m40); margin-top: 2px; }
+.invite-body { font-size: 14px; color: var(--m70); line-height: 1.70; }
+.invite-body strong { color: var(--white); font-weight: 600; }
+.invite-body p + p { margin-top: 12px; }
+.invite-sig {
+  margin-top: 18px; padding-top: 14px;
+  border-top: 1px solid var(--m08);
+  font-size: 13px; color: var(--m40);
+}
+.invite-sig strong { color: var(--v); font-weight: 600; }
+
+/* ── STEPS ── */
+.steps { display: flex; flex-direction: column; }
+.step { display: flex; gap: 16px; position: relative; }
+.step:not(:last-child)::before { content:''; position:absolute; left:19px; top:42px; width:2px; height:calc(100% - 12px); background: var(--m08); }
+.step-n { width:40px; height:40px; border-radius:50%; flex-shrink:0; background:var(--v-bg); border:1.5px solid var(--v-bd); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; color:var(--v); }
+.step-body { padding-bottom: 24px; }
+.step-h { font-size: 15px; font-weight: 600; margin-bottom: 5px; }
+.step-p { font-size: 13px; color: var(--m60); line-height: 1.55; }
+
+/* ── BARS ── */
+.bars-card { background: var(--m06); border: 1px solid var(--m08); border-radius: 16px; padding: 20px 16px 14px; margin-bottom: 18px; }
+.bars { display: flex; align-items: flex-end; gap: 7px; height: 100px; }
+.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; height:100%; justify-content:flex-end; }
+.bar-pts { font-size: 11px; font-weight: 700; }
+.bar { width: 100%; border-radius: 4px 4px 0 0; }
+.bar-lbl { font-size: 10px; color: var(--m40); }
+.bars-foot { text-align:center; font-size:10px; color:var(--m20); text-transform:uppercase; letter-spacing:1.5px; margin-top:10px; }
+
+/* ── REWARD TABLE ── */
+.rtable { width:100%; border-collapse:collapse; border-radius:14px; overflow:hidden; }
+.rtable th { background:var(--m08); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--m40); padding:10px 12px; text-align:left; }
+.rtable th:last-child { text-align:right; }
+.rtable td { padding:13px 12px; font-size:14px; border-bottom:1px solid rgba(255,255,255,.04); }
+.rtable tr:last-child td { border-bottom:none; }
+.r-base { background: rgba(255,255,255,.03); }
+.r-mid  { background: rgba(245,158,11,.07); }
+.r-high { background: rgba(29,204,206,.07); }
+.r-tot td { background: var(--m08); font-weight:700; border-top:1px solid var(--m20); }
+.day-n { font-weight:600; font-size:14px; }
+.day-d { font-size:12px; color:var(--m40); margin-top:1px; }
+.day-c { font-size:13px; color:var(--m60); }
+.pts { display:inline-flex; align-items:center; padding:4px 10px; border-radius:var(--rpill); font-weight:700; font-size:14px; }
+.pts-base { background:var(--m08); color:rgba(255,255,255,.75); }
+.pts-mid  { background:rgba(245,158,11,.22); color:var(--gold); }
+.pts-high { background:rgba(29,204,206,.20); color:var(--teal-bright); }
+.pts-tot  { font-size:16px; color:var(--gold); }
+
+/* ── RULE CARDS ── */
+.cards { display:flex; flex-direction:column; gap:12px; }
+.card { display:flex; gap:14px; background:var(--m06); border:1px solid var(--m08); border-radius:var(--r); padding:16px; }
+.card-ico { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.card-h { font-size:14px; font-weight:600; margin-bottom:4px; }
+.card-p { font-size:13px; color:var(--m60); line-height:1.5; }
+
+/* Vendor relationship card */
+.v-card { display:flex; gap:14px; background:var(--v-bg); border:1px solid var(--v-bd); border-radius:var(--r); padding:16px; margin-bottom:14px; }
+.v-card-h { font-size:14px; font-weight:700; color:var(--v); margin-bottom:5px; }
+.v-card-p { font-size:13px; color:var(--m60); line-height:1.5; }
+
+/* ── FAQ ── */
+.faqs { display:flex; flex-direction:column; gap:10px; }
+details { background:var(--m06); border:1px solid var(--m08); border-radius:14px; overflow:hidden; }
+details[open] { border-color: var(--v-bd); }
+summary { padding:16px; font-size:14px; font-weight:600; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; user-select:none; }
+summary::-webkit-details-marker { display:none; }
+.faq-ico { color:var(--teal); font-size:20px; font-weight:300; flex-shrink:0; margin-left:12px; }
+.faq-body { padding:0 16px 16px; font-size:13px; color:var(--m60); line-height:1.6; }
+
+/* ── CTA ── */
+.cta-wrap { text-align:center; padding:36px 24px; background:linear-gradient(135deg, rgba(10,92,101,.25), rgba(29,204,206,.10)); border-top:1px solid var(--m08); }
+.cta-h   { font-size:20px; font-weight:700; margin-bottom:8px; }
+.cta-sub { font-size:14px; color:var(--m60); margin-bottom:24px; line-height:1.55; }
+.cta-btn { display:inline-flex; align-items:center; gap:10px; background:var(--v); color:var(--white); font-size:15px; font-weight:700; padding:15px 34px; border-radius:var(--rpill); text-decoration:none; border:none; cursor:pointer; transition:opacity .2s, transform .1s; }
+.cta-btn:active { transform:scale(.97); opacity:.88; }
+.cta-note { margin-top:14px; font-size:12px; color:var(--m40); }
+
+footer { text-align:center; padding:20px 24px; font-size:12px; color:var(--m20); border-top:1px solid var(--m06); line-height:1.8; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+
+  <div class="excl-badge">
+    <span class="excl-dot"></span>
+    By invitation only
+  </div>
+
+  <h1 class="hero-title">
+    <span class="title-win">WIN </span><span class="title-streak">STREAK</span>
+  </h1>
+  <p class="hero-from">A personal invitation from <strong>Adaego</strong></p>
+
+  <div class="spot-confirmed">
+    <span class="spot-check">✓</span>
+    Your spot has been reserved
+  </div>
+
+  <div id="badge" class="badge badge-pre">
+    <span class="dot dot-gold" id="bdot"></span>
+    <span id="badge-txt">Opens June 15</span>
+  </div>
+
+  <div class="cd-label" id="cd-label">Your campaign begins in</div>
+  <div class="cd-grid" id="cd-grid">
+    <div class="cd-box"><span class="cd-num" id="cd-d">00</span><span class="cd-unit">Days</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-h">00</span><span class="cd-unit">Hrs</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-m">00</span><span class="cd-unit">Mins</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-s">00</span><span class="cd-unit">Secs</span></div>
+  </div>
+  <div class="live-block" id="live-block" style="display:none">
+    <span style="font-size:26px">🔥</span>
+    <div>
+      <div class="live-block-text">Your campaign is LIVE — trade now!</div>
+      <div class="live-block-sub" id="live-sub">Ends June 21, 2026</div>
+    </div>
+  </div>
+
+  <div class="date-strip">
+    <span class="date-dot"></span>
+    <span>June 15 – June 21, 2026</span>
+  </div>
+
+  <div class="pills">
+    <div class="pill"><div class="pill-ico">🎁</div><span>Earn up to 25 Extra Points — just for you</span></div>
+    <div class="pill"><div class="pill-ico">🔥</div><span>The longer your streak, the more you earn</span></div>
+    <div class="pill"><div class="pill-ico">🎫</div><span>Exclusive to selected Adaego customers</span></div>
+  </div>
+</div>
+
+<!-- ═══ CONTENT ═══ -->
+<div class="wrap">
+
+  <!-- YOUR INVITATION -->
+  <div class="sec">
+    <div class="sec-lbl">Your invitation</div>
+    <h2 class="sec-h">You've been personally selected</h2>
+
+    <div class="invite-card">
+      <div class="invite-hd">
+        <span class="invite-seal">✦</span>
+        <div>
+          <div class="invite-hd-text-top">Personal invitation from Adaego</div>
+          <div class="invite-hd-text-sub">Exclusive — not open to the public</div>
+        </div>
+      </div>
+      <div class="invite-body">
+        <p>
+          <strong>Adaego</strong> has selected you as one of their most valued trading partners on Tbay. This page was shared directly with you — it is not a public campaign and was not advertised anywhere.
+        </p>
+        <p>
+          Your selection is based on your trading history and the trust you have built with <strong>Adaego</strong>. As a loyal customer, you have been given access to <strong>Win Streak</strong> — a 7-day reward challenge created to give something back to the customers who matter most.
+        </p>
+        <p>
+          There is nothing to sign up for. Your spot is already confirmed. When the campaign opens on June 15, simply trade with <strong>Adaego</strong> as you normally would, and your rewards begin automatically.
+        </p>
+      </div>
+      <div class="invite-sig">
+        With appreciation — <strong>The Adaego Team</strong>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- HOW TO CLAIM -->
+  <div class="sec">
+    <div class="sec-lbl">How to claim</div>
+    <h2 class="sec-h">Three simple steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <div class="step-h">Trade with Adaego — just as you always do</div>
+          <div class="step-p">Nothing changes about how you trade. Simply complete gift card transactions through <strong>Adaego</strong> worth 400 or more Tbay points on any campaign day. Multiple trades on the same day are combined automatically.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <div class="step-h">Keep showing up — your streak builds itself</div>
+          <div class="step-p">Each consecutive day you hit 400+ points, your streak grows and your daily reward increases. Miss a day and the counter resets to Day 1 — but every point already earned stays in your wallet permanently.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <div class="step-h">Your bonus points arrive automatically</div>
+          <div class="step-p">You don't need to do anything to claim. Bonus points are credited to your Tbay wallet the next day by noon. Check your wallet on June 16 to see your first reward from Day 1.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- REWARD LADDER -->
+  <div class="sec">
+    <div class="sec-lbl">What you can earn</div>
+    <h2 class="sec-h">The Streak Ladder</h2>
+
+    <div class="bars-card">
+      <div class="bars">
+        <div class="bar-col"><span class="bar-pts" style="color:rgba(255,255,255,.45)">+2</span><div class="bar" style="height:32%;background:rgba(255,255,255,.15)"></div><span class="bar-lbl">D1</span></div>
+        <div class="bar-col"><span class="bar-pts" style="color:rgba(255,255,255,.45)">+2</span><div class="bar" style="height:32%;background:rgba(255,255,255,.15)"></div><span class="bar-lbl">D2</span></div>
+        <div class="bar-col"><span class="bar-pts" style="color:#D97706">+3</span><div class="bar" style="height:52%;background:#92400E"></div><span class="bar-lbl">D3</span></div>
+        <div class="bar-col"><span class="bar-pts" style="color:#D97706">+3</span><div class="bar" style="height:52%;background:#92400E"></div><span class="bar-lbl">D4</span></div>
+        <div class="bar-col"><span class="bar-pts" style="color:var(--gold)">+5</span><div class="bar" style="height:78%;background:#D97706"></div><span class="bar-lbl">D5</span></div>
+        <div class="bar-col"><span class="bar-pts" style="color:var(--gold)">+5</span><div class="bar" style="height:78%;background:#D97706"></div><span class="bar-lbl">D6</span></div>
+        <div class="bar-col"><span class="bar-pts" style="color:var(--gold-lt)">+5</span><div class="bar" style="height:78%;background:var(--gold)"></div><span class="bar-lbl">D7</span></div>
+      </div>
+      <div class="bars-foot">Your daily bonus points by streak day</div>
+    </div>
+
+    <table class="rtable">
+      <thead><tr><th>Day</th><th>Milestone</th><th style="text-align:right">Your bonus</th></tr></thead>
+      <tbody>
+        <tr class="r-base"><td><div class="day-n">Day 1</div><div class="day-d">Jun 15</div></td><td class="day-c">First qualifying day</td><td style="text-align:right"><span class="pts pts-base">+2 pts</span></td></tr>
+        <tr class="r-base"><td><div class="day-n">Day 2</div><div class="day-d">Jun 16</div></td><td class="day-c">2nd consecutive day</td><td style="text-align:right"><span class="pts pts-base">+2 pts</span></td></tr>
+        <tr class="r-mid" ><td><div class="day-n">Day 3</div><div class="day-d">Jun 17</div></td><td class="day-c">Reward escalates 🔓</td><td style="text-align:right"><span class="pts pts-mid">+3 pts</span></td></tr>
+        <tr class="r-mid" ><td><div class="day-n">Day 4</div><div class="day-d">Jun 18</div></td><td class="day-c">4th consecutive day</td><td style="text-align:right"><span class="pts pts-mid">+3 pts</span></td></tr>
+        <tr class="r-high"><td><div class="day-n">Day 5</div><div class="day-d">Jun 19</div></td><td class="day-c">Max reward unlocked ⭐</td><td style="text-align:right"><span class="pts pts-high">+5 pts</span></td></tr>
+        <tr class="r-high"><td><div class="day-n">Day 6</div><div class="day-d">Jun 20</div></td><td class="day-c">6th consecutive day</td><td style="text-align:right"><span class="pts pts-high">+5 pts</span></td></tr>
+        <tr class="r-high"><td><div class="day-n">Day 7</div><div class="day-d">Jun 21</div></td><td class="day-c">Final day 🏆</td><td style="text-align:right"><span class="pts pts-high">+5 pts</span></td></tr>
+        <tr class="r-tot"><td colspan="2">Maximum — all 7 days</td><td style="text-align:right"><span class="pts-tot">25 pts</span></td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:14px;padding:12px 14px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.20);border-radius:12px;font-size:13px;color:var(--m60);line-height:1.5">
+      <strong style="color:var(--gold)">Started late?</strong> No problem — your streak starts from whichever day you first trade. You can still reach Day 5 and earn the highest daily reward by June 21.
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- WHAT YOU SHOULD KNOW -->
+  <div class="sec">
+    <div class="sec-lbl">What you should know</div>
+    <h2 class="sec-h">A few things to keep in mind</h2>
+    <div class="cards">
+
+      <div class="v-card">
+        <div class="card-ico" style="background:var(--v-bg);font-size:20px">🤝</div>
+        <div>
+          <div class="v-card-h">Your rewards are tied to your Adaego relationship</div>
+          <div class="v-card-p">Because this campaign was built specifically around your history with <strong>Adaego</strong>, your daily 400-point target is measured on trades made through Adaego on Tbay. This is how your loyalty is rewarded.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-ico" style="background:rgba(29,204,206,.12)">📊</div>
+        <div>
+          <div class="card-h">Daily target: 400+ Tbay points</div>
+          <div class="card-p">Your trades through Adaego must total 400 or more Tbay points within a single calendar day (midnight to midnight). Multiple trades on the same day all count together.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-ico" style="background:rgba(245,158,11,.12)">🔄</div>
+        <div>
+          <div class="card-h">Missing a day resets your streak</div>
+          <div class="card-p">If you don't reach 400 points on any day, your streak counter returns to zero. You can start a new streak from the very next day — and any points already earned are yours permanently.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-ico" style="background:rgba(29,204,206,.12)">🕐</div>
+        <div>
+          <div class="card-h">Points arrive next day by noon</div>
+          <div class="card-p">Your bonus points are added to your Tbay wallet automatically the following day by 12:00 noon. No action needed on your part.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-ico" style="background:rgba(239,68,68,.10)">🔒</div>
+        <div>
+          <div class="card-h">Maximum: 25 points over 7 days</div>
+          <div class="card-p">The total bonus is capped at 25 Tbay points — the full amount if you qualify on all 7 consecutive days.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <div class="sec">
+    <div class="sec-lbl">FAQ</div>
+    <h2 class="sec-h">Questions you might have</h2>
+    <div class="faqs">
+
+      <details>
+        <summary>Why was I selected for this?<span class="faq-ico">+</span></summary>
+        <div class="faq-body">Adaego chose you based on your trading history on Tbay. You are among a small group of their most active and trusted customers. This campaign is their way of rewarding your loyalty — and giving you a chance to earn more while doing what you already do.</div>
+      </details>
+
+      <details>
+        <summary>Do I need to sign up or register?<span class="faq-ico">+</span></summary>
+        <div class="faq-body">No. Your spot is already confirmed. When the campaign opens on June 15, simply trade with Adaego on Tbay as you normally would. If you hit 400+ Tbay points that day, your streak begins automatically and your first bonus points arrive the next day by noon.</div>
+      </details>
+
+      <details>
+        <summary>When will I see my bonus points?<span class="faq-ico">+</span></summary>
+        <div class="faq-body">Points are credited to your Tbay wallet the next day by noon. If you trade with Adaego on June 15 and hit 400+ points, your bonus arrives by June 16 noon. You will see it in your wallet — no action needed.</div>
+      </details>
+
+      <details>
+        <summary>Does it matter which gift cards I trade?<span class="faq-ico">+</span></summary>
+        <div class="faq-body">No — any successful gift card trade through Adaego counts toward your 400-point daily total. USD, EUR, GBP, CAD, AUD — all card types qualify. Fast and normal trades both count equally.</div>
+      </details>
+
+      <details>
+        <summary>My streak broke. What can I do?<span class="faq-ico">+</span></summary>
+        <div class="faq-body">Streak resets are automatic when a qualifying day is missed. Points you already earned stay yours. If you believe a Tbay platform error prevented your trade from completing correctly, contact Tbay Support with your User ID and the order reference — we will investigate.</div>
+      </details>
+
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta-h">Your invitation is waiting</div>
+  <div class="cta-sub">
+    The campaign opens <strong>June 15, 2026</strong>.<br>
+    Trade with <strong>Adaego</strong> that day — 400+ Tbay points — and your streak begins. Your rewards follow automatically.
+  </div>
+  <a href="tbay://trade" class="cta-btn">
+    Accept My Invitation &nbsp;→
+  </a>
+  <div class="cta-note">Your spot is reserved · Bonus points credited next day by noon</div>
+</div>
+
+<footer>
+  A personal invitation from <strong style="color:rgba(255,255,255,.45)">Adaego</strong><br>
+  Win Streak &nbsp;·&nbsp; June 15–21, 2026 &nbsp;·&nbsp; Tbay platform &nbsp;·&nbsp; Selected customers only
+</footer>
+
+<script>
+const START=new Date('2026-06-15T00:00:00'),END=new Date('2026-06-22T00:00:00');
+const e={
+  badge:document.getElementById('badge'),bdot:document.getElementById('bdot'),
+  txt:document.getElementById('badge-txt'),lbl:document.getElementById('cd-label'),
+  grid:document.getElementById('cd-grid'),live:document.getElementById('live-block'),
+  sub:document.getElementById('live-sub'),
+  d:document.getElementById('cd-d'),h:document.getElementById('cd-h'),
+  m:document.getElementById('cd-m'),s:document.getElementById('cd-s'),
+};
+function pad(n){return String(Math.max(0,n)).padStart(2,'0');}
+function split(ms){return[Math.floor(ms/86400000),Math.floor((ms%86400000)/3600000),Math.floor((ms%3600000)/60000),Math.floor((ms%60000)/1000)];}
+function tick(){
+  const now=new Date(),ts=START-now,te=END-now;
+  if(ts>0){
+    const[d,h,m,s]=split(ts);
+    e.d.textContent=pad(d);e.h.textContent=pad(h);e.m.textContent=pad(m);e.s.textContent=pad(s);
+    e.lbl.textContent='Your campaign begins in';e.grid.style.display='grid';e.live.style.display='none';
+    e.badge.className='badge badge-pre';e.bdot.className='dot dot-gold';e.txt.textContent='Opens June 15, 2026';
+  } else if(te>0){
+    const[d,h,m,s]=split(te);
+    e.d.textContent=pad(d);e.h.textContent=pad(h);e.m.textContent=pad(m);e.s.textContent=pad(s);
+    e.lbl.textContent='Campaign ends in';e.grid.style.display='grid';e.live.style.display='flex';
+    const dl=Math.ceil(te/86400000);
+    e.sub.textContent=dl>1?dl+' days left — keep your streak going!':'Last day — trade before midnight!';
+    e.badge.className='badge badge-live';e.bdot.className='dot dot-teal';e.txt.textContent='Campaign is LIVE';
+  } else {
+    e.grid.style.display='none';e.live.style.display='none';e.lbl.textContent='';
+    e.badge.className='badge badge-done';e.bdot.style.display='none';e.txt.textContent='Campaign ended June 21';
+  }
+}
+tick();setInterval(tick,1000);
+document.querySelectorAll('details').forEach(el=>{
+  el.addEventListener('toggle',()=>{el.querySelector('.faq-ico').textContent=el.open?'−':'+';});
+});
+</script>
+</body>
+</html>
